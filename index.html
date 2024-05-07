@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Toko Baju Online</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Load Vue.js -->
+  <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+  <style>
+    .highlight {
+      background-color: #ffcccb;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <!-- Header -->
+    <header>
+      <h1> Daftar Toko Baju Lintang</h1>
+      <p>{{ slogan }}</p>
+    </header>
+
+    <!-- Input Pencarian -->
+    <div>
+      <label for="search">Cari Baju:</label>
+      <input type="text" id="search" v-model="searchTerm">
+    </div>
+
+    <!-- Daftar Baju -->
+    <div>
+      <h2>Daftar Baju</h2>
+      <ul>
+        <li v-for="item in filteredItems" :key="item.id" :class="{ 'highlight': item.highlighted }">
+          {{ item.name }} - {{ item.price }}
+          <button @click="toggleHighlight(item)">Highlight</button>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    new Vue({
+      el: '#app',
+      data: {
+        slogan: 'Temukan pakaian yang akan anda cari !',
+        searchTerm: '',
+        items: [
+          { id: 1, name: 'Kemeja Polos', price: 'Rp.200.000', highlighted: false },
+          { id: 2, name: 'Kaos Polo', price: 'Rp.150.000', highlighted: false },
+          { id: 3, name: 'Celana Jeans', price: 'Rp.300.000', highlighted: false },
+          { id: 4, name: 'Blazer', price: 'Rp.500.000', highlighted: false }
+        ]
+      },
+      computed: {
+        filteredItems() {
+          return this.items.filter(item => item.name.toLowerCase().includes(this.searchTerm.toLowerCase()));
+        }
+      },
+      methods: {
+        toggleHighlight(item) {
+          item.highlighted = !item.highlighted;
+        }
+      }
+    });
+  </script>
+
+  
+</body>
+
+
+
+</html>
+
+
